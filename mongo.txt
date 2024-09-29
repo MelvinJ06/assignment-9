@@ -1,0 +1,128 @@
+dbassignment> db.user.insertMany([
+... {user:"john",email:"john@gmail.com",key:"john12",role:"student",created:new Date(),updated:new Date()},
+...  {user:"joe",email:"joe@gmail.com",key:"joe12",role:"student",created:new Date(),updated:new Date()},
+...  {user:"jai",email:"jai@gmail.com",key:"jai12",role:"student",created:new Date(),updated:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a4f684d6e7ef72c73c0d'),
+    '1': ObjectId('66f9a4f684d6e7ef72c73c0e'),
+    '2': ObjectId('66f9a4f684d6e7ef72c73c0f')
+  }
+}
+dbassignment> db.codekatas.insertMany([
+...  {user:ObjectId("66f981d584d6e7ef72c73bf8"),challenge:"fizzbuzz",difficult:"easy",submissionDate:new Date(),score:100,language:"javascript"},
+... {user:ObjectId("66f981d584d6e7ef72c73bf9"),challenge:"fizzbuzz",difficult:"easy",submissionDate:new Date(),score:90,language:"javascript"},
+... {user:ObjectId("66f981d584d6e7ef72c73bfa"),challenge:"fizzbuzz",difficult:"easy",submissionDate:new Date(),score:90,language:"javascript"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a5e184d6e7ef72c73c10'),
+    '1': ObjectId('66f9a5e184d6e7ef72c73c11'),
+    '2': ObjectId('66f9a5e184d6e7ef72c73c12')
+  }
+}
+dbassignment> db.attendances.insertMany([
+...  {user:ObjectId("66f981d584d6e7ef72c73bf8"),classDate:new Date("2023-9-1"),status:"present",created:new Date()},
+... {user:ObjectId("66f981d584d6e7ef72c73bf9"),classDate:new Date("2023-9-1"),status:"absent",created:new Date()},
+... {user:ObjectId("66f981d584d6e7ef72c73bfa"),classDate:new Date("2023-9-1"),status:"present",created:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a6b884d6e7ef72c73c13'),
+    '1': ObjectId('66f9a6b884d6e7ef72c73c14'),
+    '2': ObjectId('66f9a6b884d6e7ef72c73c15')
+  }
+}
+dbassignment> db.topics.insertMany([
+... {title:"introduction to mongodb",description:"about mongodb",created:new Date(),updated:new Date()},
+... {title:"introduction to java script",description:"about java script",created:new Date(),updated:new Date()},
+... {title:"introduction to sql",description:"about sql",created:new Date(),updated:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a76384d6e7ef72c73c16'),
+    '1': ObjectId('66f9a76384d6e7ef72c73c17'),
+    '2': ObjectId('66f9a76384d6e7ef72c73c18')
+  }
+}
+
+dbassignment> db.task.insertMany([
+... {id:ObjectId("66f99c5984d6e7ef72c73c01"),title:"install mongos",description:"follow instruction",due:new Date("2023-9-15"),created:new Date(),updated:new Date()},
+... {id:ObjectId("66f99c5984d6e7ef72c73c02"),title:"install java script",description:"follow instruction",due:new Date("2023-9-15"),created:new Date(),updated:new Date()},
+... {id:ObjectId("66f99c5984d6e7ef72c73c03"),title:"install sql",description:"follow instruction",due:new Date("2023-9-15"),created:new Date(),updated:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a90e84d6e7ef72c73c19'),
+    '1': ObjectId('66f9a90e84d6e7ef72c73c1a'),
+    '2': ObjectId('66f9a90e84d6e7ef72c73c1b')
+  }
+}
+dbassignment> db.companydrives.insertMany([
+...  {driveName:"Project Resources",driveLink:"http://example.com/resources",created:new Date(),updates:new Date()},
+...  {driveName:"Project Resources",driveLink:"http://example.com/resources",created:new Date(),updates:new Date()},
+... {driveName:"Project Resources",driveLink:"http://example.com/resources",created:new Date(),updates:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9a9fc84d6e7ef72c73c1c'),
+    '1': ObjectId('66f9a9fc84d6e7ef72c73c1d'),
+    '2': ObjectId('66f9a9fc84d6e7ef72c73c1e')
+  }
+}
+dbassignment> db.mentor.insertMany([
+... {user:ObjectId("66f981d584d6e7ef72c73bf8"),specilization:"mongodb",bio:"experienced in mongodb",contact:"mentor@gmail.com",created:new Date()},
+... {user:ObjectId("66f981d584d6e7ef72c73bf9"),specilization:"java script",bio:"experienced in java script",contact:"mentor@gmail.com",created:new Date()},
+... {user:ObjectId("66f981d584d6e7ef72c73bfa"),specilization:"sql",bio:"experienced in sql",contact:"mentor@gmail.com",created:new Date()}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('66f9aaaf84d6e7ef72c73c1f'),
+    '1': ObjectId('66f9aaaf84d6e7ef72c73c20'),
+    '2': ObjectId('66f9aaaf84d6e7ef72c73c21')
+  }
+}
+dbassignment> const startDate = new Date("2023-10-01");
+
+dbassignment> const endDate = new Date("2023-10-31");
+
+dbassignment> db.topics.find({
+... create:{
+... $gte:startDate,
+... $lte:endDate}
+... })
+
+dbassignment> db.companydrives.find({
+... created:{
+... $gte:new Date("2020-10-15"),
+... $lte:new Date("2020-10-31")}
+... })
+
+dbassignment> const placement = db.placements.find({}).toArray();
+
+dbassignment> const drivesIds = placement.map(p => p.driveId);
+
+dbassignment> const companyDrivesForPlacement = db.companydrives.find({
+... _id:{$in:drivesIds}
+... }).toArray();
+
+dbassignment> const userId = ObjectId("66f9a4f684d6e7ef72c73c0d");
+
+dbassignment> const problemsolvercount= db.codekatas.countDocuments({userId:userId});
+
+dbassignment> const userId = ObjectId("66f9a4f684d6e7ef72c73c0e");
+
+dbassignment> const problemsolvercount= db.codekatas.countDocuments({userId:userId});
+
+dbassignment> const userId = ObjectId("66f9a4f684d6e7ef72c73c0f");
+
+dbassignment> const problemsolvercount= db.codekatas.countDocuments({userId:userId});
+
+dbassignment> const absentUsers = db.attendances.find({
+... status:"absent",
+... classDate:{
+... $gte:new Date("2020-10-15"),
+... $lte:new Date("2020-10-31")
+... }
+... }).toArray();
